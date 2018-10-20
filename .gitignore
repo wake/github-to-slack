@@ -1,0 +1,6 @@
+.htaccess
+/.env
+/.idea
+/composer.lock
+/vendor
+prepros-6.config
