@@ -70,7 +70,7 @@
      *
      */
     public function attachment (Array $content) {
-      $this->attachment += $content;
+      $this->attachment = $content + $this->attachment;
       return $this;
     }
 
@@ -112,14 +112,15 @@
      *
      */
     public function _setTarget ($target) {
+      return $this;
 
       $att = [];
 
       if (isset ($target['name']))
-        $att['title'] = $target['name'];
+        $att['text'] = $target['name'];
 
       if (isset ($target['url']))
-        $att['title_link'] = $target['url'];
+        $att['text_link'] = $target['url'];
 
       return $this->attachment ($att);
     }
@@ -153,7 +154,73 @@
      *
      */
     public function _setDescription ($desc = '') {
-      return $this->attachment (['pretext' => $desc]);
+
+      if (is_string ($desc))
+        return $this->attachment (['text' => $desc]);
+
+      else if (isset ($desc['mrkdwn']))
+        return $this->attachment (['text' => $desc['mrkdwn'], 'mrkdwn_in' => ['text', 'pretext']]);
+
+      else if (isset ($desc['text']))
+        return $this->attachment (['text' => $desc['text']]);
+
+      return $this;
+
+
+      // Dropped below
+      if (is_string ($desc))
+        return $this->attachment (['pretext' => $desc]);
+
+      else if (isset ($desc['mrkdwn']))
+        return $this->attachment (['pretext' => $desc['mrkdwn'], 'mrkdwn_in' => ['text', 'footer', 'pretext']]);
+
+      else if (isset ($desc['text']))
+        return $this->attachment (['pretext' => $desc['text']]);
+
+      return $this;
+    }
+
+
+    /**
+     *
+     * Set desc
+     *
+     */
+    public function _setParagraphs ($paragraphs = []) {
+
+      foreach ($paragraphs as $paragraph)
+        $this->_setParagraph ($paragraph);
+
+      return $this;
+    }
+
+
+    /**
+     *
+     * Set desc
+     *
+     */
+    public function _setParagraph ($paragraph = []) {
+
+      $att = [];
+
+      if (isset ($paragraph['title']))
+        $att['title'] = $paragraph['title'];
+
+      if (isset ($paragraph['text']))
+        $att['value'] = $paragraph['text'];
+
+      if (isset ($paragraph['short']))
+        $att['short'] = $paragraph['short'];
+
+      $fields = [];
+
+      if (isset ($this->attachment['fields']))
+        $fields = $this->attachment['fields'];
+
+      $fields[] = $att;
+
+      return $this->attachment (['fields' => $fields]);
     }
 
 
@@ -166,8 +233,14 @@
 
       $att = [];
 
-      if (isset ($source['name']))
+      if (is_string ($source['name']))
         $att['footer'] = $source['name'];
+
+      else if (isset ($source['name']['mrkdwn']))
+        $att['footer'] = $source['name']['mrkdwn'];
+
+      else if (isset ($source['name']['text']))
+        $att['footer'] = $source['name']['text'];
 
       if (isset ($source['icon']))
         $att['footer_icon'] = $source['icon'];
@@ -182,6 +255,8 @@
      *
      */
     public function send () {
+
+      $this->_setColor ('#51A1CB');
 
       $body = [];
 
