@@ -296,7 +296,7 @@
         $curl = "{$project['html_url']}#card-{$pl['project_card']['id']}";
         $desc = [
           'text' => $desc,
-          'mrkdwn' => "Card *<$curl|" . mb_substr ($pl['project_card']['note'], 0, 10) . "...>* {$pl['action']} by *{$pl['sender']['login']}*"
+          'mrkdwn' => "Card *<$curl|" . mb_substr (str_replace ("\r\n", '', $pl['project_card']['note']), 0, 10) . "...>* {$pl['action']} by *{$pl['sender']['login']}*"
             . " in project *<{$project['html_url']}|{$project['name']}>*"
         ];
       }
@@ -375,7 +375,7 @@
         $curl = "{$project['html_url']}#card-{$pl['project_card']['id']}";
         $desc = [
           'text' => $desc,
-          'mrkdwn' => "Card *<$curl|" . mb_substr ($pl['project_card']['note'], 0, 10) . "...>* {$pl['action']} by *{$pl['sender']['login']}*"
+          'mrkdwn' => "Card *<$curl|" . mb_substr (str_replace ("\r\n", '', $pl['project_card']['note']), 0, 10) . "...>* {$pl['action']} by *{$pl['sender']['login']}*"
             . " in project *<{$project['html_url']}|{$project['name']}>*"
         ];
       }
@@ -448,7 +448,7 @@
 
         $desc = [
           'text' => $desc,
-          'mrkdwn' => "Card *<$curl|" . mb_substr ($pl['project_card']['note'], 0, 10) . "...>* {$pl['action']} by *{$pl['sender']['login']}*"
+          'mrkdwn' => "Card *<$curl|" . mb_substr (str_replace ("\r\n", '', $pl['project_card']['note']), 0, 10) . "...>* {$pl['action']} by *{$pl['sender']['login']}*"
             . " from column *<{$fromUrl}|{$fromColumn['name']}>* to *<{$toUrl}|{$toColumn['name']}>*"
             . " in project *<{$project['html_url']}|{$project['name']}>*"
         ];
