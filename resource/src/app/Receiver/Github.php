@@ -85,7 +85,7 @@
       // Set source
       $this->data['source'] = [
         'name' => 'Github Webhook',
-        'icon' => $app->request->fullUrl () . '/assets/logo/GitHub-Mark-32px.png'
+        'icon' => $app->request->root () . '/assets/logo/GitHub-Mark-32px.png'
       ];
 
       return $this;
@@ -162,7 +162,8 @@
           'name' => [
             'text' => $this->data['source']['name'],
             'mrkdwn' => "*<{$pl['repository']['html_url']}|{$pl['repository']['full_name']}>* | Github Webhook"
-          ]
+          ],
+          'icon' => $this->data['source']['icon'],
         ]
       ] + $this->data;
 
@@ -203,7 +204,8 @@
           'name' => [
             'text' => $this->data['source']['name'],
             'mrkdwn' => "*<{$pl['repository']['html_url']}|{$pl['repository']['full_name']}>* | Github Webhook"
-          ]
+          ],
+          'icon' => $this->data['source']['icon'],
         ]
       ] + $this->data;
 
@@ -254,7 +256,8 @@
           'name' => [
             'text' => $this->data['source']['name'],
             'mrkdwn' => "*<{$pl['repository']['html_url']}|{$pl['repository']['full_name']}>* | Github Webhook"
-          ]
+          ],
+          'icon' => $this->data['source']['icon'],
         ]
       ] + $this->data;
 
@@ -325,7 +328,8 @@
           'name' => [
             'text' => $this->data['source']['name'],
             'mrkdwn' => "*<{$pl['repository']['html_url']}|{$pl['repository']['full_name']}>* | Github Webhook"
-          ]
+          ],
+          'icon' => $this->data['source']['icon'],
         ]
       ] + $this->data;
 
@@ -411,7 +415,8 @@
           'name' => [
             'text' => $this->data['source']['name'],
             'mrkdwn' => "*<{$pl['repository']['html_url']}|{$pl['repository']['full_name']}>* | Github Webhook"
-          ]
+          ],
+          'icon' => $this->data['source']['icon'],
         ]
       ] + $this->data;
 
@@ -470,7 +475,8 @@
           'name' => [
             'text' => $this->data['source']['name'],
             'mrkdwn' => "*<{$pl['repository']['html_url']}|{$pl['repository']['full_name']}>* | Github Webhook"
-          ]
+          ],
+          'icon' => $this->data['source']['icon'],
         ]
       ] + $this->data;
 
