@@ -352,7 +352,7 @@
 
       $pl = $this->payload;
 
-      $diff = new \Diff (explode("\n", $pl['changes']['note']['from']), explode("\n", $pl['project_card']['note']), []);
+      $diff = new \Diff (explode("\r\n", $pl['changes']['note']['from']), explode("\r\n", $pl['project_card']['note']), []);
       $ctxt = $diff->render (new \App\Helper\DiffRendererSplitContext ());
 
       $ori = $ctxt['a'];

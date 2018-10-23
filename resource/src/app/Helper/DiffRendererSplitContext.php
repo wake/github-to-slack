@@ -74,16 +74,16 @@ class DiffRendererSplitContext extends \Diff_Renderer_Abstract
 
       /*
       if($i2 - $i1 >= 2) {
-        $diff .= '*** '.($group[0][1] + 1).','.$i2." ****".PHP_EOL;
+        $diff .= '*** '.($group[0][1] + 1).','.$i2." ****"."\r\n";
       }
       else {
         $diff .= '*** '.$i2." ****\n";
       }
       if($j2 - $j1 >= 2) {
-        $separator = '--- '.($j1 + 1).','.$j2." ----".PHP_EOL;
+        $separator = '--- '.($j1 + 1).','.$j2." ----"."\r\n";
       }
       else {
-        $separator = '--- '.$j2." ----".PHP_EOL;
+        $separator = '--- '.$j2." ----"."\r\n";
       }
       */
       $hasVisible = false;
@@ -97,11 +97,13 @@ class DiffRendererSplitContext extends \Diff_Renderer_Abstract
         foreach($group as $code) {
           list($tag, $i1, $i2, $j1, $j2) = $code;
           if($tag == 'insert') {
-            $diff['a'][] = '';
+            $diff['a'][] = '...';
             continue;
           }
-          if ($tag != 'equal')
-            $diff['a'][] = implode(PHP_EOL.$this->tagMap[$tag].' ', $this->diff->GetA($i1, $i2)).PHP_EOL;
+          if ($tag == 'delete')
+            $diff['a'][] = '~' . implode("~\r\n~", $this->diff->GetA($i1, $i2))."~\r\n";
+          else if ($tag != 'equal')
+            $diff['a'][] = implode("\r\n", $this->diff->GetA($i1, $i2))."\r\n";
         }
       }
       $hasVisible = false;
@@ -116,11 +118,11 @@ class DiffRendererSplitContext extends \Diff_Renderer_Abstract
         foreach($group as $code) {
           list($tag, $i1, $i2, $j1, $j2) = $code;
           if($tag == 'delete') {
-            $diff['b'][] = '';
+            $diff['b'][] = '...';
             continue;
           }
           if ($tag != 'equal')
-            $diff['b'][] = implode(PHP_EOL.$this->tagMap[$tag].' ', $this->diff->GetB($j1, $j2)).PHP_EOL;
+            $diff['b'][] = implode("\r\n", $this->diff->GetB($j1, $j2))."\r\n";
         }
       }
     }
