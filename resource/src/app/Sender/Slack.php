@@ -245,6 +245,9 @@
       if (isset ($source['icon']))
         $att['footer_icon'] = $source['icon'];
 
+      if (isset ($source['footer']))
+        $att['ts'] = time ();
+
       return $this->attachment ($att);
     }
 
