@@ -138,6 +138,24 @@
 
       $pl = $this->payload;
 
+      // Combine description for all pages and actions
+      $desc = [];
+
+      foreach ($pl['pages'] as $p) {
+
+        if (! isset ($desc[$p['action']]))
+          $desc[$p['action']] = [];
+
+        $desc[$p['action']][] = "*<{$p['html_url']}|{$p['title']}>*";
+      }
+
+      $mrkdwn = [];
+
+      foreach ($desc as $act => $descs)
+        $mrkdwn[] = (count ($descs) > 1 ? 'pages ' : 'page ') . implode (' , ', $descs) . " {$act}";
+
+      $mrkdwn = "Wiki " . implode (' and ', $mrkdwn) . " by *{$pl['sender']['login']}*";
+
       $this->data = [
 
         'action' => $pl['pages'][0]['action'],
@@ -155,7 +173,7 @@
 
         'description' => [
           'text' => "Wiki page {$pl['pages'][0]['title']} {$pl['pages'][0]['action']} by {$pl['sender']['login']} in {$pl['repository']['full_name']}",
-          'mrkdwn' => "Wiki page *<{$pl['pages'][0]['html_url']}|{$pl['pages'][0]['title']}>* {$pl['pages'][0]['action']} by *{$pl['sender']['login']}*"
+          'mrkdwn' => $mrkdwn
         ],
 
         'source' => [
